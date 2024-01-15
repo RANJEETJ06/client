@@ -6,7 +6,7 @@ const SignUp = () => {
   const [password, setPassword] = useState("");
   const [username, setUsername] = useState("");
   const [error, setError] = useState("");
-  const navigate=useNavigate();
+  const navigate = useNavigate();
 
   const handleSignUp = () => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -18,13 +18,13 @@ const SignUp = () => {
       setError("Please provide a username");
       return;
     }
-    if(!password.trim()){
+    if (!password.trim()) {
       setError("Please provide a password");
       return;
     }
     //signUp logic
     console.log("Signing up...");
-    navigate('/Login');
+    navigate("/Login");
     setError("");
   };
 
@@ -32,12 +32,15 @@ const SignUp = () => {
     <div className="container mx-auto">
       <div className="max-w-md mx-auto bg-white p-8 border border-gray-300 rounded-md shadow-md">
         <h2 className="text-2xl font-semibold mb-4">Sign Up</h2>
-        
+
         {error && <p className="text-red-500 mb-4">{error}</p>}
 
         <form>
           <div className="mb-4">
-            <label htmlFor="email" className="block text-sm font-medium text-gray-600">
+            <label
+              htmlFor="email"
+              className="block text-sm font-medium text-gray-600"
+            >
               Email Address
             </label>
             <input
@@ -50,7 +53,10 @@ const SignUp = () => {
             />
           </div>
           <div className="mb-4">
-            <label htmlFor="username" className="block text-sm font-medium text-gray-600">
+            <label
+              htmlFor="username"
+              className="block text-sm font-medium text-gray-600"
+            >
               Username
             </label>
             <input
@@ -63,7 +69,10 @@ const SignUp = () => {
             />
           </div>
           <div className="mb-4">
-            <label htmlFor="password" className="block text-sm font-medium text-gray-600">
+            <label
+              htmlFor="password"
+              className="block text-sm font-medium text-gray-600"
+            >
               Password
             </label>
             <input

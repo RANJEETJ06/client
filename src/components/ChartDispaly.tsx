@@ -16,16 +16,19 @@ const ChartDisplay: React.FC<ChartDisplayProps> = ({
   useEffect(() => {
     if (chartRef.current) {
       Chart.getChart(chartRef.current)?.destroy();
-  
+
       const ctx = chartRef.current.getContext("2d");
       if (ctx) {
         const categoryTotals = categories.map((category) => {
           const totalAmount = transactions
-            .filter((transaction) => transaction.category.categoryId === category.categoryId)
+            .filter(
+              (transaction) =>
+                transaction.category.categoryId === category.categoryId
+            )
             .reduce((sum, transaction) => sum + transaction.amount, 0);
           return totalAmount;
         });
-  
+
         new Chart(ctx, {
           type: "pie",
           data: {
@@ -56,7 +59,6 @@ const ChartDisplay: React.FC<ChartDisplayProps> = ({
       }
     }
   }, [transactions, categories]);
-  
 
   return <canvas ref={chartRef} width={300} height={300}></canvas>;
 };
