@@ -1,9 +1,10 @@
 import React from 'react'
+import Box from '../components/Box'
 
 const Auth = () => {
   return (
-    <div>
-      Auth
+    <div className='mt-20'>
+      <Box field1={"Login"} field2={"Signup"}/>
     </div>
   )
 }

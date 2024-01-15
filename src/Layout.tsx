@@ -8,7 +8,7 @@ const Layout: React.FC <LayoutProps>= ({ children }) => {
   return (
     <div >
       <Topbar title="Expense Monitor"/>
-      <div className="flex justify-center flex-wrap ">
+      <div className="flex justify-center flex-wrap mt-11">
         {children}
       </div>
     </div>
