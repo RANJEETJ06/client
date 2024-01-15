@@ -22,7 +22,7 @@ const TransctionList: React.FC<TransctionListProps> = ({ transactions }) => {
           <td className="border px-2 py-2">{transaction.transactionId}</td>
           <td className="border px-4 py-2">{transaction.description}</td>
           <td className="border px-4 py-2">{transaction.category.categoryName}</td>
-          <td className="border px-4 py-2">${transaction.amount}</td>
+          <td className="border px-4 py-2">₹{transaction.amount}</td>
         </tr>
       ))}
     </tbody>

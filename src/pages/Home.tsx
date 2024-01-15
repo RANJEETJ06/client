@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import ChartDispaly from "../components/ChartDispaly";
 import TransctionList from "../components/TransctionList";
-import { useNavigate, useParams } from 'react-router-dom';
+import { useNavigate, useParams } from "react-router-dom";
 
 export interface Transaction {
   transactionId: number;
@@ -26,8 +26,8 @@ const categories: Category[] = [
 ];
 
 const Home: React.FC = () => {
-  const navigate=useNavigate();
-  const { userId }=useParams();
+  const navigate = useNavigate();
+  const { userId } = useParams();
   const [showHistory, setShowHistory] = useState<boolean>(false);
   const [editingBudget, setEditingBudget] = useState<boolean>(false);
 
@@ -54,15 +54,15 @@ const Home: React.FC = () => {
     },
   ]);
   const [budget, setBudget] = useState<number>(0);
-  const [bugetError,setBudgetError]=useState(false);
+  const [bugetError, setBudgetError] = useState(false);
   const handleAddTransaction = (): void => {
     const trimmedDescription: string = newTransactionDescription.trim();
     const parsedAmount: number = parseFloat(newTransactionAmount.toString());
 
     if (trimmedDescription && !isNaN(parsedAmount) && selectedCategory) {
-      if(budget-parsedAmount<0){
+      if (budget - parsedAmount < 0) {
         setBudgetError(true);
-      }else{
+      } else {
         const newTransaction: Transaction = {
           transactionId: transactions.length + 1,
           description: trimmedDescription,
@@ -70,7 +70,7 @@ const Home: React.FC = () => {
           date: new Date(),
           category: selectedCategory,
         };
-        setBudget(budget-parsedAmount);
+        setBudget(budget - parsedAmount);
         setTransactions([...transactions, newTransaction]);
         setNewTransactionDescription("");
         setNewTransactionAmount(0);
@@ -113,7 +113,6 @@ const Home: React.FC = () => {
                 value={budget}
                 onChange={(e) => setBudget(parseFloat(e.target.value))}
                 className="mt-1 p-2 w-full border border-gray-300 rounded-md"
-                style={{ WebkitAppearance: 'none', MozAppearance: 'textfield' }}
               />
               <button
                 className="bg-green-500 text-white py-2 px-4 rounded-md ml-2 hover:bg-green-600 mt-2"
@@ -124,7 +123,7 @@ const Home: React.FC = () => {
             </div>
           ) : (
             <p>
-              <strong>Budget:</strong> ${budget}{" "}
+              <strong>Budget:</strong> ₹{budget}{" "}
               <button
                 className="text-blue-500 hover:underline ml-2 cursor-pointer"
                 onClick={handleEditBudget}
@@ -156,7 +155,7 @@ const Home: React.FC = () => {
           {bugetError && <span className="text-red-600">*Budegt is low</span>}
           <label
             htmlFor="newTransactionAmount"
-            className="block text-sm font-medium text-gray-600"
+            className="block text-sm font-medium text-gray-600 "
           >
             Amount
           </label>
@@ -210,9 +209,9 @@ const Home: React.FC = () => {
           Add New Transaction
         </button>
 
-        <button 
-        className="bg-blue-500 text-white py-2 px-4 rounded-md mb-4 hover:bg-blue-600 mr-1"
-        onClick={()=>navigate(`/${userId}/Budget`)}
+        <button
+          className="bg-blue-500 text-white py-2 px-4 rounded-md mb-4 hover:bg-blue-600 mr-1"
+          onClick={() => navigate(`/${userId}/Budget`)}
         >
           Monthly track
         </button>
@@ -226,9 +225,7 @@ const Home: React.FC = () => {
             : "Show Transaction History"}
         </button>
 
-        {showHistory && (
-          <TransctionList transactions={transactions}/>
-        )}
+        {showHistory && <TransctionList transactions={transactions} />}
       </div>
       <div className="flex flex-wrap justify-center basis-2/5 mr-12">
         <ChartDispaly transactions={transactions} categories={categories} />
