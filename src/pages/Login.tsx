@@ -6,10 +6,9 @@ const Login = () => {
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const navigate = useNavigate();
-  const userId = "";
+  const userId = 1;
 
   const handleLogin = () => {
-    // Simple email or username validation
     const isEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(identifier);
 
     if (!isEmail && !identifier.trim()) {
@@ -20,10 +19,8 @@ const Login = () => {
       setError("Inavlid credentials");
       return;
     }
-    // Add your login logic here
     console.log("Logging in...");
     navigate(`/${userId}/Dashboard`);
-    // Reset error after successful login
     setError("");
   };
 

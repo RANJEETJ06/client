@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import ChartDispaly from "../components/ChartDispaly";
+import TransctionList from "../components/TransctionList";
+import { useNavigate, useParams } from 'react-router-dom';
 
 export interface Transaction {
   transactionId: number;
@@ -24,10 +26,11 @@ const categories: Category[] = [
 ];
 
 const Home: React.FC = () => {
+  const navigate=useNavigate();
+  const { userId }=useParams();
   const [showHistory, setShowHistory] = useState<boolean>(false);
   const [editingBudget, setEditingBudget] = useState<boolean>(false);
 
-  // State for handling transactions
   const [newTransactionDescription, setNewTransactionDescription] =
     useState<string>("");
   const [newTransactionAmount, setNewTransactionAmount] = useState<number>(0);
@@ -75,13 +78,9 @@ const Home: React.FC = () => {
       }
     }
   };
-
-  // Helper function to toggle editing budget
   const handleEditBudget = (): void => {
     setEditingBudget(!editingBudget);
   };
-
-  // Helper function to save the edited budget
   const handleSaveBudget = (): void => {
     if (!isNaN(parseFloat(budget.toString()))) {
       setEditingBudget(false);
@@ -89,7 +88,7 @@ const Home: React.FC = () => {
   };
   return (
     <div className="container mx-auto flex flex-col lg:flex-row justify-evenly">
-      <div className="max-w-md mx-auto bg-white p-8 border border-gray-300 rounded-md shadow-md basis-2/3">
+      <div className="max-w-max mx-auto bg-white p-8 border border-gray-300 rounded-md shadow-md basis-3/5">
         <h2 className="text-2xl font-semibold mb-4">Dashboard</h2>
 
         <div className="mb-4">
@@ -114,7 +113,7 @@ const Home: React.FC = () => {
                 value={budget}
                 onChange={(e) => setBudget(parseFloat(e.target.value))}
                 className="mt-1 p-2 w-full border border-gray-300 rounded-md"
-                style={{ appearance: "textfield" }}
+                style={{ WebkitAppearance: 'none', MozAppearance: 'textfield' }}
               />
               <button
                 className="bg-green-500 text-white py-2 px-4 rounded-md ml-2 hover:bg-green-600 mt-2"
@@ -205,10 +204,17 @@ const Home: React.FC = () => {
         </div>
 
         <button
-          className="bg-blue-500 text-white py-2 px-4 rounded-md mb-4 hover:bg-blue-600"
+          className="bg-blue-500 text-white py-2 px-4 rounded-md mb-4 hover:bg-blue-600 mr-1"
           onClick={handleAddTransaction}
         >
           Add New Transaction
+        </button>
+
+        <button 
+        className="bg-blue-500 text-white py-2 px-4 rounded-md mb-4 hover:bg-blue-600 mr-1"
+        onClick={()=>navigate(`/${userId}/Budget`)}
+        >
+          Monthly track
         </button>
 
         <button
@@ -221,19 +227,10 @@ const Home: React.FC = () => {
         </button>
 
         {showHistory && (
-          <div>
-            <h3 className="text-lg font-semibold mb-2">Transaction History</h3>
-            <ul>
-              {transactions.map((transaction) => (
-                <li key={transaction.transactionId} className="mb-2">
-                  {transaction.description}: ${transaction.amount}
-                </li>
-              ))}
-            </ul>
-          </div>
+          <TransctionList transactions={transactions}/>
         )}
       </div>
-      <div className="flex flex-wrap justify-center basis-1/3 mr-12">
+      <div className="flex flex-wrap justify-center basis-2/5 mr-12">
         <ChartDispaly transactions={transactions} categories={categories} />
       </div>
     </div>
