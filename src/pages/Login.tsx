@@ -1,27 +1,34 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { apiCall } from "../utils/apiCall";
+import { LoadingContext } from "../Layout";
 
 const Login = () => {
-  const [identifier, setIdentifier] = useState("");
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const navigate = useNavigate();
-  const userId = 1;
+  const { setLoading } = useContext(LoadingContext);
 
-  const handleLogin = () => {
-    const isEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(identifier);
-
-    if (!isEmail && !identifier.trim()) {
-      setError("Inavlid credentials");
-      return;
+  const handleLogin = async () => {
+    setLoading(true);
+    try {
+      const data = await apiCall("/api/login/", "post", {
+        email,
+        password,
+      });
+      if (data.success) {
+        const userId = data.id;
+        navigate(`/${userId}/Dashboard`);
+      } else {
+        setError("Invalid credentials");
+      }
+    } catch (error) {
+      setError("An error occurred during login");
     }
-    if (!password.trim()) {
-      setError("Inavlid credentials");
-      return;
-    }
-    console.log("Logging in...");
-    navigate(`/${userId}/Dashboard`);
-    setError("");
+    setTimeout(() => {
+      setLoading(false); // Set loading to false after some time (simulating loading)
+    }, 2000);
   };
 
   return (
@@ -35,14 +42,16 @@ const Login = () => {
               htmlFor="identifier"
               className="block text-sm font-medium text-gray-600"
             >
-              Email or Username
+              Email
             </label>
             <input
               type="text"
               id="identifier"
               name="identifier"
-              value={identifier}
-              onChange={(e) => setIdentifier(e.target.value)}
+              value={email}
+              onChange={(e) => {
+                setEmail(e.target.value);
+              }}
               className="mt-1 p-2 w-full border border-gray-300 rounded-md"
             />
           </div>
