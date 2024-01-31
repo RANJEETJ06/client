@@ -1,20 +1,21 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { apiCall } from "../utils/apiCall";
 
 const SignUp = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [username, setUsername] = useState("");
+  const [userName, setUsername] = useState("");
   const [error, setError] = useState("");
   const navigate = useNavigate();
 
-  const handleSignUp = () => {
+  const handleSignUp = async () => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(email)) {
       setError("Invalid email address");
       return;
     }
-    if (!username.trim()) {
+    if (!userName.trim()) {
       setError("Please provide a username");
       return;
     }
@@ -22,10 +23,20 @@ const SignUp = () => {
       setError("Please provide a password");
       return;
     }
-    //signUp logic
-    console.log("Signing up...");
-    navigate("/Login");
-    setError("");
+    try {
+      const data = await apiCall(`/api/users/`, "post", {
+        userName,
+        email,
+        password,
+      });
+      if (data) {
+        const userId=data.userId;
+        navigate(`/${userId}/Dashboard`);
+      }
+    } catch (error) {
+      console.log(error);
+      setError("");
+    }
   };
 
   return (
@@ -63,7 +74,7 @@ const SignUp = () => {
               type="text"
               id="username"
               name="username"
-              value={username}
+              value={userName}
               onChange={(e) => setUsername(e.target.value)}
               className="mt-1 p-2 w-full border border-gray-300 rounded-md"
             />

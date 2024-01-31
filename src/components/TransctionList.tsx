@@ -1,5 +1,5 @@
 import { useNavigate, useParams } from "react-router-dom";
-import { Transaction } from "../pages/Home";
+import { Transaction } from "./../utils/AllInterface";
 
 interface TransctionListProps {
   transactions: Transaction[];

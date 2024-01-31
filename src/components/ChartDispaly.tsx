@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from "react";
 import Chart from "chart.js/auto";
-import { Transaction, Category } from "../pages/Home";
+import { Transaction,Category } from "../utils/AllInterface";
 
 interface ChartDisplayProps {
   transactions: Transaction[];
