@@ -26,7 +26,6 @@ const TransactionDetails = () => {
         setMoney(transaction.amount);
         setDate(new Date(transaction.date).toISOString().split("T")[0]);
       } catch (error) {
-        console.log(error);
         navigate("/*");
       }
     };

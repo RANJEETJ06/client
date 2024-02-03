@@ -38,7 +38,6 @@ const SignUp = () => {
       }
       setLoading(false)
     } catch (error) {
-      console.log(error);
       setError("");
     }finally{
       setLoading(false)

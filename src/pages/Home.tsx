@@ -65,7 +65,6 @@ const Home: React.FC = () => {
         setTransactions(allTranactions);
         setBudget(updatedBudget);
       } catch (error) {
-        console.error("Error fetching data:", error);
         navigate('/*')
       }
     };
@@ -125,7 +124,6 @@ const Home: React.FC = () => {
         console.log(data);
         setEditingBudget(false);
       } catch (error) {
-        console.error("Error saving budget:", error);
         navigate('/*')
       }
     }
