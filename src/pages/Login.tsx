@@ -25,6 +25,7 @@ const Login = () => {
       }
     } catch (error) {
       setError("An error occurred during login");
+      navigate('/*')
     }
     setTimeout(() => {
       setLoading(false); // Set loading to false after some time (simulating loading)

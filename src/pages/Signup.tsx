@@ -1,6 +1,7 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { apiCall } from "../utils/apiCall";
+import { LoadingContext } from "../Layout";
 
 const SignUp = () => {
   const [email, setEmail] = useState("");
@@ -8,6 +9,7 @@ const SignUp = () => {
   const [userName, setUsername] = useState("");
   const [error, setError] = useState("");
   const navigate = useNavigate();
+  const { setLoading } = useContext(LoadingContext);
 
   const handleSignUp = async () => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -24,18 +26,22 @@ const SignUp = () => {
       return;
     }
     try {
+      setLoading(true)
       const data = await apiCall(`/api/users/`, "post", {
         userName,
         email,
         password,
       });
       if (data) {
-        const userId=data.userId;
+        const userId = data.userId;
         navigate(`/${userId}/Dashboard`);
       }
+      setLoading(false)
     } catch (error) {
       console.log(error);
       setError("");
+    }finally{
+      setLoading(false)
     }
   };
 

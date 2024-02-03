@@ -66,10 +66,11 @@ const Home: React.FC = () => {
         setBudget(updatedBudget);
       } catch (error) {
         console.error("Error fetching data:", error);
+        navigate('/*')
       }
     };
     fetchData();
-  }, [userId, setLoading, updatedBudget]);
+  }, [userId, setLoading, updatedBudget,navigate]);
 
   const handleAddTransaction = async () => {
     const trimmedDescription: string = newTransactionDescription.trim();
@@ -125,6 +126,7 @@ const Home: React.FC = () => {
         setEditingBudget(false);
       } catch (error) {
         console.error("Error saving budget:", error);
+        navigate('/*')
       }
     }
   };

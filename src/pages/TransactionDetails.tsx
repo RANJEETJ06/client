@@ -12,21 +12,26 @@ const TransactionDetails = () => {
 
   useEffect(() => {
     const fetchData = async () => {
-      const transaction = await apiCall(
-        `/api/transaction/get/${userId}/${transactionId}/`,
-        "get"
-      );
-      const category = await apiCall(
-        `/api/category/get/${transactionId}/`,
-        "get"
-      );
-      setDesc(transaction.description);
-      setCategoryName(category.categoryName);
-      setMoney(transaction.amount);
-      setDate(new Date(transaction.date).toISOString().split("T")[0]);
+      try {
+        const transaction = await apiCall(
+          `/api/transaction/get/${userId}/${transactionId}/`,
+          "get"
+        );
+        const category = await apiCall(
+          `/api/category/get/${transactionId}/`,
+          "get"
+        );
+        setDesc(transaction.description);
+        setCategoryName(category.categoryName);
+        setMoney(transaction.amount);
+        setDate(new Date(transaction.date).toISOString().split("T")[0]);
+      } catch (error) {
+        console.log(error);
+        navigate("/*");
+      }
     };
     fetchData();
-  }, [transactionId, userId]);
+  }, [transactionId, userId, navigate]);
 
   return (
     <div>
