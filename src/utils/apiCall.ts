@@ -15,6 +15,6 @@ export const apiCall = async (endpoint: string, method: string, body?: {}) => {
     const response = await axios(config);
     return response.data;
   } catch (error) {
-    console.log(error);
+    console.log("API Call Failed");
   }
 };
