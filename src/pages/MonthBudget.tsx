@@ -60,6 +60,7 @@ const MonthBudget: React.FC = () => {
 
   return (
     <div className="sm:text-xs">
+      <h2 className="text-2xl font-bold mb-4">Comming Soon...</h2>
       <h2 className="text-2xl font-bold mb-4">Monthly Budget Overview</h2>
       <canvas ref={chartRef} width="400" height="200"></canvas>
       <button
